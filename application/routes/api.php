@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ProdutosController;
+use App\Http\Controllers\ProductsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,8 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('produtos')->group(function () {
-    Route::controller(ProdutosController::class)->group(function () {
-        Route::get('/listar-todos', 'listarTodos');
+Route::prefix('products')->group(function () {
+    Route::controller(ProductsController::class)->group(function () {
+        Route::get('/list-all', 'listAll');
     });
 });

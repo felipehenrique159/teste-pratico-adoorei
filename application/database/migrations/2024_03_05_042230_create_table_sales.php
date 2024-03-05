@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('vendas', function (Blueprint $table) {
+        Schema::create('sales', function (Blueprint $table) {
             $table->id('sales_id');
             $table->decimal('amount', 8, 2);
             $table->boolean('canceled')->default(false);
@@ -19,6 +19,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('vendas');
+        Schema::dropIfExists('sales');
     }
 };
