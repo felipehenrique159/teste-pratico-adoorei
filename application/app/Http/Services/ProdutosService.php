@@ -16,7 +16,7 @@ class ProdutosService
         $this->produtosRepository = (new ProdutosRepository);
     }
 
-    public function listarTodos() : array
+    public function listarTodos(): array
     {
         return $this->produtosRepository->listarTodos();
     }

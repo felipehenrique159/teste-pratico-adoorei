@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\ProdutosService;
+use Illuminate\Http\JsonResponse;
 
 class ProdutosController extends Controller
 {
@@ -16,10 +17,11 @@ class ProdutosController extends Controller
         $this->produtosService = (new ProdutosService);
     }
 
-    public function listarTodos() : array
+    public function listarTodos(): JsonResponse
     {
         try {
-            return $this->produtosService->listarTodos();
+            $produtos = $this->produtosService->listarTodos();
+            return response()->json($produtos);
         } catch (\Exception $e) {
             throw $e;
         }
