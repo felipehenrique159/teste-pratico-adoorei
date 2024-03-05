@@ -21,6 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('produtos')->group(function () {
     Route::controller(ProdutosController::class)->group(function () {
-        Route::get('/listar', 'listar');
+        Route::get('/listar-todos', 'listarTodos');
     });
 });

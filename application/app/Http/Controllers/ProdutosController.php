@@ -17,7 +17,7 @@ class ProdutosController extends Controller
         $this->produtosService = (new ProdutosService);
     }
 
-    public function listar() : array{
+    public function listarTodos() : array{
         try {
             return $this->produtosService->listarTodos();
         } catch (\Exception $e) {
