@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\ProdutosService;
-use Illuminate\Http\Request;
 
 class ProdutosController extends Controller
 {
@@ -17,7 +16,8 @@ class ProdutosController extends Controller
         $this->produtosService = (new ProdutosService);
     }
 
-    public function listarTodos() : array{
+    public function listarTodos() : array
+    {
         try {
             return $this->produtosService->listarTodos();
         } catch (\Exception $e) {

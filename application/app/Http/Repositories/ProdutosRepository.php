@@ -6,7 +6,8 @@ use App\Models\Produtos;
 
 class ProdutosRepository
 {
-    public function listarTodos() : array {
+    public function listarTodos() : array
+    {
         return Produtos::all()->toArray();
     }
 }
