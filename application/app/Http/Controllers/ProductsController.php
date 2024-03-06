@@ -2,20 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Services\ProductsService;
+use App\Services\ProductsService;
 use Illuminate\Http\JsonResponse;
 
 class ProductsController extends Controller
 {
-    /**
-     * @var ProductsService
-     */
-    private $productsService;
-
-    public function __construct()
-    {
-        $this->productsService = (new ProductsService);
-    }
+    public function __construct(
+        protected readonly ProductsService $productsService
+    ) {}
 
     public function listAll(): JsonResponse
     {

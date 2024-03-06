@@ -2,75 +2,53 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Services\SalesService;
+use App\Services\SalesService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class SalesController extends Controller
 {
-    /**
-     * @var SalesService
-     */
-    private $salesService;
-
-    public function __construct()
-    {
-        $this->salesService = (new SalesService);
-    }
+    public function __construct(
+        protected readonly SalesService $salesService
+    ) {}
 
     public function processSale(Request $request): JsonResponse
     {
-        try {
-            $response = $this->salesService->processSale($request);
-            return response()->json($response, 201);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        $processSale = $this->salesService->processSale($request);
+        return response()->json($processSale);
     }
 
     public function canceledSale($idSale): JsonResponse
     {
-        try {
-            $response = $this->salesService->canceledSale($idSale);
-            if (isset($response['error'])) {
-                return response()->json($response, 404);
-            }
-            return response()->json($response, 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        $this->salesService->canceledSale($idSale);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Sale canceled successfully'
+        ]);
     }
 
     public function showSale($idSale): JsonResponse
     {
-        try {
-            $response = $this->salesService->showSale($idSale);
-            if (isset($response['error'])) {
-                return response()->json($response, 404);
-            }
-            return response()->json($response, 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        $sale = $this->salesService->showSale($idSale);
+
+        return response()->json($sale);
     }
 
     public function listAll(): JsonResponse
     {
-        try {
-            $response = $this->salesService->listAll();
-            return response()->json($response, 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        $allSales = $this->salesService->listAll();
+
+        return response()->json($allSales);
     }
 
     public function addProductToSale(Request $request): JsonResponse
     {
-        try {
-            $response = $this->salesService->addProductToSale($request);
-            return response()->json($response, 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        $this->salesService->addProductToSale($request);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Products added to sale'
+        ]);
     }
 }

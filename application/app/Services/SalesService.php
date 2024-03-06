@@ -1,27 +1,18 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Services;
 
-use App\Http\Repositories\ProductsRepository;
-use App\Http\Repositories\SalesRepository;
+use App\Exceptions\SalesServiceException;
+use App\Repositories\ProductsRepository;
+use App\Repositories\SalesRepository;
+use Symfony\Component\HttpFoundation\Response;
 
 class SalesService
 {
-    /**
-     * @var SalesRepository
-     */
-    private $salesRepository;
-
-    /**
-     * @var ProductsRepository
-     */
-    private $productsRepository;
-
-    public function __construct()
-    {
-        $this->salesRepository = (new SalesRepository);
-        $this->productsRepository = (new ProductsRepository);
-    }
+    public function __construct(
+        private readonly SalesRepository $salesRepository,
+        private readonly ProductsRepository $productsRepository
+    ) {}
 
     public function processSale($request)
     {
@@ -36,21 +27,21 @@ class SalesService
         return $this->salesRepository->saleWithProducts($sale->sales_id);
     }
 
-    public function canceledSale($idSale)
+    public function canceledSale($idSale): bool
     {
         if (!$this->salesRepository->verifyIfExists($idSale)) {
-            return ['error' => 'Sale does not exist'];
+            throw new SalesServiceException('Sale does not exist', Response::HTTP_NOT_FOUND);
         }
 
         $this->salesRepository->updateSaleForCanceled($idSale);
 
-        return ['message' => 'Sale canceled successfully'];
+        return true;
     }
 
     public function showSale($idSale)
     {
         if (!$this->salesRepository->verifyIfExists($idSale)) {
-            return ['error' => 'Sale does not exist'];
+            throw new SalesServiceException('Sale does not exist', Response::HTTP_NOT_FOUND);
         }
 
         return $this->salesRepository->saleWithProducts($idSale);
@@ -61,10 +52,10 @@ class SalesService
         return $this->salesRepository->listAllSalesWithProducts();
     }
 
-    public function addProductToSale($request)
+    public function addProductToSale($request): bool
     {
         if (!$this->salesRepository->verifyIfExists($request->saleId)) {
-            return ['error' => 'Sale does not exist'];
+            throw new SalesServiceException('Sale does not exist', Response::HTTP_NOT_FOUND);
         }
 
         $totalSumProducts = $this->productsRepository->sumPriceProducts($request->idsProducts);
@@ -76,6 +67,6 @@ class SalesService
 
         $this->salesRepository->updateAmount($sale, $newAmount);
 
-        return ['message' => 'Products added to sale'];
+        return true;
     }
 }
