@@ -8,7 +8,7 @@ class ProductsRepository
 {
     public function listAll(): array
     {
-        return Products::all()->toArray();
+        return Products::select('name', 'price', 'description')->get()->toArray();
     }
 
     public function sumPriceProducts($idsProducts)

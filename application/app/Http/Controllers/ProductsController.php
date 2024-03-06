@@ -21,9 +21,9 @@ class ProductsController extends Controller
     {
         try {
             $products = $this->productsService->listAll();
-            return response()->json($products);
+            return response()->json($products, 200);
         } catch (\Exception $e) {
-            throw $e;
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }

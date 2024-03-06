@@ -29,12 +29,16 @@ class SalesRepository
 
     public function saleWithProducts($saleId)
     {
-        return Sales::with('products')->find($saleId);
+        return Sales::with('products')
+            ->select('sales_id', 'amount', 'canceled', 'canceled_date')
+            ->find($saleId);
     }
 
     public function listAllSalesWithProducts()
     {
-        return Sales::with('products')->get();
+        return Sales::with('products')
+            ->select('sales_id', 'amount', 'canceled', 'canceled_date')
+            ->get();
     }
 
     public function updateSaleForCanceled($idSale)
