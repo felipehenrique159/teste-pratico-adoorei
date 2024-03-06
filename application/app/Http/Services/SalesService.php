@@ -29,4 +29,15 @@ class SalesService
 
         return $this->salesRepository->saleWithProducts($sale->sales_id);
     }
+
+    public function canceledSale($idSale)
+    {
+        if (!$this->salesRepository->verifyIfExists($idSale)) {
+            return ['error' => 'Sale does not exist'];
+         }
+
+        $this->salesRepository->updateSaleForCanceled($idSale);
+
+        return ['message' => 'Sale canceled successfully'];
+    }
 }

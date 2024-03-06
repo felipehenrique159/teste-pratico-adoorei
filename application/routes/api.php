@@ -29,5 +29,7 @@ Route::prefix('products')->group(function () {
 Route::prefix('sales')->group(function () {
     Route::controller(SalesController::class)->group(function () {
         Route::post('/process-sale', 'processSale');
+        Route::patch('/canceled-sale/{id}', 'canceledSale');
+
     });
 });

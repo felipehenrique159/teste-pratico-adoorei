@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\SalesService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class SalesController extends Controller
@@ -17,12 +18,26 @@ class SalesController extends Controller
         $this->salesService = (new SalesService);
     }
 
-    public function processSale(Request $request)
+    public function processSale(Request $request): JsonResponse
     {
         try {
-            return $this->salesService->processSale($request);
+            $response = $this->salesService->processSale($request);
+            return response()->json($response, 200);
         } catch (\Exception $e) {
-            throw $e;
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function canceledSale($idSale): JsonResponse
+    {
+        try {
+            $response = $this->salesService->canceledSale($idSale);
+            if (isset($response['error'])) {
+                return response()->json($response, 404);
+            }
+            return response()->json($response);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }
