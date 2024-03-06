@@ -10,4 +10,9 @@ class ProductsRepository
     {
         return Products::all()->toArray();
     }
+
+    public function sumPriceProducts($idsProducts)
+    {
+        return Products::whereIn('product_id', $idsProducts)->sum('price');
+    }
 }

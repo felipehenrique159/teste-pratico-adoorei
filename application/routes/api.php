@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\SalesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,5 +23,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('products')->group(function () {
     Route::controller(ProductsController::class)->group(function () {
         Route::get('/list-all', 'listAll');
+    });
+});
+
+Route::prefix('sales')->group(function () {
+    Route::controller(SalesController::class)->group(function () {
+        Route::post('/process-sale', 'processSale');
     });
 });
