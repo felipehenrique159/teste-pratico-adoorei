@@ -32,5 +32,6 @@ Route::prefix('sales')->group(function () {
         Route::patch('/canceled-sale/{id}', 'canceledSale');
         Route::get('/sale/{id}', 'showSale');
         Route::get('/list-all', 'listAll');
+        Route::post('/add-product-to-sale', 'addProductToSale');
     });
 });

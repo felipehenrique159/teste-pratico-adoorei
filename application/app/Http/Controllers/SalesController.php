@@ -22,7 +22,7 @@ class SalesController extends Controller
     {
         try {
             $response = $this->salesService->processSale($request);
-            return response()->json($response, 200);
+            return response()->json($response, 201);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -58,6 +58,16 @@ class SalesController extends Controller
     {
         try {
             $response = $this->salesService->listAll();
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function addProductToSale(Request $request): JsonResponse
+    {
+        try {
+            $response = $this->salesService->addProductToSale($request);
             return response()->json($response, 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
