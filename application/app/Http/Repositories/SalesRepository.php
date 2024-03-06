@@ -23,6 +23,11 @@ class SalesRepository
         return Sales::with('products')->find($saleId);
     }
 
+    public function listAllsalesWithProducts()
+    {
+        return Sales::with('products')->get();
+    }
+
     public function syncProducts($sale, $idsProducts)
     {
         $sale->products()->sync($idsProducts);

@@ -49,4 +49,9 @@ class SalesService
 
         return $this->salesRepository->saleWithProducts($idSale);
     }
+
+    public function listAll()
+    {
+        return $this->salesRepository->listAllsalesWithProducts();
+    }
 }
