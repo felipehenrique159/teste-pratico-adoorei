@@ -35,7 +35,20 @@ class SalesController extends Controller
             if (isset($response['error'])) {
                 return response()->json($response, 404);
             }
-            return response()->json($response);
+            return response()->json($response, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function showSale($idSale): JsonResponse
+    {
+        try {
+            $response = $this->salesService->showSale($idSale);
+            if (isset($response['error'])) {
+                return response()->json($response, 404);
+            }
+            return response()->json($response, 200);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

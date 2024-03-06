@@ -34,10 +34,19 @@ class SalesService
     {
         if (!$this->salesRepository->verifyIfExists($idSale)) {
             return ['error' => 'Sale does not exist'];
-         }
+        }
 
         $this->salesRepository->updateSaleForCanceled($idSale);
 
         return ['message' => 'Sale canceled successfully'];
+    }
+
+    public function showSale($idSale)
+    {
+        if (!$this->salesRepository->verifyIfExists($idSale)) {
+            return ['error' => 'Sale does not exist'];
+        }
+
+        return $this->salesRepository->saleWithProducts($idSale);
     }
 }
