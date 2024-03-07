@@ -13,11 +13,8 @@ class ProductsController extends Controller
 
     public function listAll(): JsonResponse
     {
-        try {
-            $products = $this->productsService->listAll();
-            return response()->json($products, 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        $products = $this->productsService->listAll();
+
+        return response()->json($products);
     }
 }

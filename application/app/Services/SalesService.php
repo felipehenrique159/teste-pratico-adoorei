@@ -6,6 +6,7 @@ use App\Exceptions\SalesServiceException;
 use App\Repositories\ProductsRepository;
 use App\Repositories\SalesRepository;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Request;
 
 class SalesService
 {
@@ -14,12 +15,12 @@ class SalesService
         private readonly ProductsRepository $productsRepository
     ) {}
 
-    public function processSale($request)
+    public function processSale(Request $request): array
     {
-        $totalSumProducts = $this->productsRepository->sumPriceProducts($request->idsProducts);
+        $newProductsTotalPrice = $this->productsRepository->sumPriceProducts($request->idsProducts);
 
         $sale = $this->salesRepository->save([
-            'amount' => $totalSumProducts
+            'amount' => $newProductsTotalPrice
         ]);
 
         $this->salesRepository->addProductsToSale($sale, $request->idsProducts);
@@ -27,7 +28,7 @@ class SalesService
         return $this->salesRepository->saleWithProducts($sale->sales_id);
     }
 
-    public function canceledSale($idSale): bool
+    public function canceledSale(int $idSale): bool
     {
         if (!$this->salesRepository->verifyIfExists($idSale)) {
             throw new SalesServiceException('Sale does not exist', Response::HTTP_NOT_FOUND);
@@ -38,7 +39,7 @@ class SalesService
         return true;
     }
 
-    public function showSale($idSale)
+    public function showSale(int $idSale): array
     {
         if (!$this->salesRepository->verifyIfExists($idSale)) {
             throw new SalesServiceException('Sale does not exist', Response::HTTP_NOT_FOUND);
@@ -47,23 +48,24 @@ class SalesService
         return $this->salesRepository->saleWithProducts($idSale);
     }
 
-    public function listAll()
+    public function listAll(): array
     {
         return $this->salesRepository->listAllSalesWithProducts();
     }
 
-    public function addProductToSale($request): bool
+    public function addProductToSale(Request $request): bool
     {
         if (!$this->salesRepository->verifyIfExists($request->saleId)) {
             throw new SalesServiceException('Sale does not exist', Response::HTTP_NOT_FOUND);
         }
 
-        $totalSumProducts = $this->productsRepository->sumPriceProducts($request->idsProducts);
+        $newProductsTotalPrice = $this->productsRepository->sumPriceProducts($request->idsProducts);
+
         $sale = $this->salesRepository->find($request->saleId);
 
         $this->salesRepository->addProductsToSale($sale, $request->idsProducts);
 
-        $newAmount = $sale->amount + $totalSumProducts;
+        $newAmount = $sale->amount + $newProductsTotalPrice;
 
         $this->salesRepository->updateAmount($sale, $newAmount);
 

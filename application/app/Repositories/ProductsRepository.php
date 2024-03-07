@@ -11,7 +11,7 @@ class ProductsRepository
         return Products::select('name', 'price', 'description')->get()->toArray();
     }
 
-    public function sumPriceProducts($idsProducts)
+    public function sumPriceProducts(array $idsProducts): float
     {
         return Products::whereIn('product_id', $idsProducts)->sum('price');
     }

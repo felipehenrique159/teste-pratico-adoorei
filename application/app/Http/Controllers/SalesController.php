@@ -15,10 +15,11 @@ class SalesController extends Controller
     public function processSale(Request $request): JsonResponse
     {
         $processSale = $this->salesService->processSale($request);
+
         return response()->json($processSale);
     }
 
-    public function canceledSale($idSale): JsonResponse
+    public function canceledSale(int $idSale): JsonResponse
     {
         $this->salesService->canceledSale($idSale);
 
@@ -28,7 +29,7 @@ class SalesController extends Controller
         ]);
     }
 
-    public function showSale($idSale): JsonResponse
+    public function showSale(int $idSale): JsonResponse
     {
         $sale = $this->salesService->showSale($idSale);
 
