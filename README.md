@@ -24,7 +24,7 @@
 
 ### Sobre a aplicação
 
-Aplicação back-end no formato API rest, utilizada para um loja fictícia que servirá para registrar a venda de celulares.
+Aplicação back-end no formato API rest, utilizada para um loja fictícia que servirá para registrar, cancelar e consultar a venda de celulares.
 
 ### Tecnologias utilizadas
 
@@ -60,11 +60,11 @@ Aplicação back-end no formato API rest, utilizada para um loja fictícia que s
 }
 ```
 
-### PATCH localhost:80/api/sales/canceled-sale/{id}
+### PATCH localhost:80/api/sales/canceled-sale/
 
 - Cancelar uma venda
 
-### GET localhost:80/api/sales/sale/{id}
+### GET localhost:80/api/sales/sale/
 
 - Consultar uma venda
 
