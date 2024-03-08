@@ -9,9 +9,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sales_products', function (Blueprint $table) {
-            $table->id();
+            $table->integer('id')->autoIncrement();
             $table->integer('sales_id');
             $table->integer('product_id');
+
+            $table->foreign('sales_id')
+                ->references('sales_id')
+                ->on('sales')
+                ->onDelete('cascade');
         });
     }
 

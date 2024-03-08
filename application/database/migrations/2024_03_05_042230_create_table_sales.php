@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sales', function (Blueprint $table) {
-            $table->id('sales_id');
+            $table->integer('sales_id')->autoIncrement();
             $table->decimal('amount', 8, 2);
             $table->boolean('canceled')->default(false);
             $table->timestamp('canceled_date')->nullable();
