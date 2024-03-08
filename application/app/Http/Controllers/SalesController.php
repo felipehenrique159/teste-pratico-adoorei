@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddProductToSaleRequest;
+use App\Http\Requests\ProcessSaleRequest;
 use App\Services\SalesService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class SalesController extends Controller
 {
@@ -12,7 +13,7 @@ class SalesController extends Controller
         protected readonly SalesService $salesService
     ) {}
 
-    public function processSale(Request $request): JsonResponse
+    public function processSale(ProcessSaleRequest $request): JsonResponse
     {
         $processSale = $this->salesService->processSale($request);
 
@@ -43,7 +44,7 @@ class SalesController extends Controller
         return response()->json($allSales);
     }
 
-    public function addProductToSale(Request $request): JsonResponse
+    public function addProductToSale(AddProductToSaleRequest $request): JsonResponse
     {
         $this->salesService->addProductToSale($request);
 
