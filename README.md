@@ -8,6 +8,7 @@
 - Execute de dentro do contêiner os seguintes comandos:
 
   - composer install
+  - php artisan key:generate
   - php artisan config:cache (Rodar após a configuração do .env para limpar os cache)
   - php artisan config:clear
 
