@@ -61,11 +61,11 @@ Aplicação back-end no formato API rest, utilizada para um loja fictícia que s
 }
 ```
 
-### PATCH localhost:80/api/sales/canceled-sale/
+### PATCH localhost:80/api/sales/canceled-sale/{id}
 
 - Cancelar uma venda
 
-### GET localhost:80/api/sales/sale/
+### GET localhost:80/api/sales/sale/{id}
 
 - Consultar uma venda
 
